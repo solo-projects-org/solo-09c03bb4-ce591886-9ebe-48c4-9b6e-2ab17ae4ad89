@@ -1,0 +1,18 @@
+services:
+  deid-api:
+    build: .
+    image: lims-deid-api:1.0.0
+    ports:
+      - "8000:8000"
+    environment:
+      DATA_DIR: /data
+      INPUT_CSV: /app/samples/inputs/lims.csv
+      INITIAL_CONSENT_CSV: /app/samples/inputs/initial_consent.csv
+      # Simulated per-row cost so a revocation can be demonstrated mid-generation.
+      ROW_DELAY_SECONDS: "0.02"
+    volumes:
+      - deid-data:/data
+    restart: unless-stopped
+
+volumes:
+  deid-data:
